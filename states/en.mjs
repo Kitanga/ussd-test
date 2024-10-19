@@ -29,7 +29,7 @@ export default {
         },
 
         [STATES.BANKING]: {
-            text: "Banking\n\n1. Stanbic \n2. Zanaco \n3. IDB \n4. FNB ",
+            text: "Banking:\n\n1. Stanbic \n2. Zanaco \n3. IDB \n4. FNB",
             forwardStates: [
                 STATES.STANBIC,
                 STATES.ZANACO,
@@ -39,7 +39,7 @@ export default {
         },
 
         [STATES.MOBILE_MONEY]: {
-            text: "Mobile Money \n\n1. MTN \n2. Airtel \n3. Zamtel \n4. Zed Mobile ",
+            text: "Mobile Money:\n\n1. MTN \n2. Airtel \n3. Zamtel \n4. Zed Mobile ",
             forwardStates: [
                 STATES.MTN,
                 STATES.AIRTEL,
