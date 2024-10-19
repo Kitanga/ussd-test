@@ -1,18 +1,37 @@
 import lang from "./lang/index.mjs";
 import { sessions } from "./server.mjs";
+import { STATES } from "./states/en.mjs";
 import stateManager from "./states/index.mjs";
 
 const ussdMenuBuilder = async (body) => {
     const currentSession = sessions.get(body.sessionID);
 
-    if (currentSession || !body.newSession) {
-        const current_state = currentSession.state;
+    if (currentSession) {
+        const currentState = currentSession.state;
         const statesLocale = stateManager.en.states;
         const langTextLocale = lang.en;
 
-        const state = statesLocale[current_state];
+        const state = statesLocale[currentState];
 
-        const option = body.userData;
+        const option = body.userData.trim();
+
+        if (option == 'b' && currentState !== STATES.MAIN_MENU) {
+            // Get the last state
+            currentSession.statePath.pop();
+            const lastState = currentSession.statePath[currentSession.statePath.length - 1];
+
+            console.log('Last state:', lastState);
+
+            currentSession.state = lastState;
+
+            return {
+                userID: body.userID,
+                sessionID: body.sessionID,
+                continueSession: true,
+                msisdn: body.msisdn,
+                message: statesLocale[lastState].text,
+            };
+        }
 
         if (isNaN(+option)) {
             sessions.delete(body.sessionID);
@@ -51,7 +70,9 @@ const ussdMenuBuilder = async (body) => {
 
         const continueSession = !!stateData.forwardStates.length;
 
-        if (!continueSession) {
+        if (continueSession) {
+            currentSession.statePath.push(newState);
+        } else {
             sessions.delete(body.sessionID);
         }
 
@@ -71,6 +92,7 @@ const ussdMenuBuilder = async (body) => {
             userID: body.userID,
             continueSession: true,
             msisdn: body.msisdn,
+            statePath: [current_state],
         });
 
         return {
