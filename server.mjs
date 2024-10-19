@@ -24,9 +24,13 @@ fastify.post('/ussd', async (req, resp) => {
     try {
         menu_res = await ussdMenuBuilder(info);
     } catch(err) {
+        resp.type('application/json');
         resp.send(err);
     }
+    console.log('resp:', menu_res);
+    
 
+    resp.type('application/json');
     resp.send(menu_res);
 });
 
