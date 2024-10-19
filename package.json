@@ -1,0 +1,20 @@
+{
+  "name": "test-cilela-email",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@fastify/multipart": "^9.0.1",
+    "axios": "^1.7.7",
+    "fastify": "^5.0.0",
+    "hono": "^4.6.5"
+  }
+}
